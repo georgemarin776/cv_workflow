@@ -1,0 +1,29 @@
+name: Compile LaTeX to PDF
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup TeX Live
+      uses: xu-cheng/texlive-action@v2
+      with:
+        scheme: basic
+
+    - name: Compile LaTeX to PDF
+      run: pdflatex cv.tex
+
+    - name: Upload PDF as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: compiled-pdf
+        path: cv.pdf
